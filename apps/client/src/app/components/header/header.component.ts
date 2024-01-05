@@ -101,6 +101,7 @@ export class HeaderComponent implements OnDestroy {
   submitDialog() {
     if (this.myForm.invalid) return this.myForm.markAllAsTouched()
 
+    // TODO: call Image service http
     console.log(this.myForm.value)
 
     this.closeDialog()

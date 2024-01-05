@@ -1,9 +1,32 @@
 <article class="card">
   <img class="card__image" src="https://placehold.co/{{ size }}" alt="" />
   <div class="card__overlay overlay">
-    <button class="overlay__button">delete</button>
+    <button class="overlay__button" (click)="openDialog(dialogTemplate)">
+      delete
+    </button>
     <p class="overlay__title">
       Eiusmod laborum et nisi quis labore officia commodo adipisicing in.
     </p>
   </div>
 </article>
+
+<!-- Dialog -->
+<ng-template #dialogTemplate>
+  <h1 class="dialog__title">Are you sure?</h1>
+  <div class="dialog__content">
+    <div class="dialog__actions">
+      <shared-button
+        type="button"
+        label="Cancel"
+        btnStyle="secondary"
+        (onClick)="closeDialog()"
+      />
+      <shared-button
+        type="submit"
+        btnStyle="warning"
+        label="Delete"
+        (onClick)="submitDialog()"
+      />
+    </div>
+  </div>
+</ng-template>
