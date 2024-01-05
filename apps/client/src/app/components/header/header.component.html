@@ -18,17 +18,24 @@
   }
 </header>
 
+<!-- Dialog -->
 <ng-template #dialogTemplate>
   <h1 class="dialog__title">Add a new photo</h1>
   <div class="dialog__content">
-    <form class="dialog__form form">
+    <form class="dialog__form form" [formGroup]="myForm">
       <div class="form__group">
         <label class="form__label">Label</label>
         <input
           class="form__input"
-          placeholder="Quis quis enim est ex voluptate nulla ullamco. "
+          placeholder="Quis quis enim est ex voluptate nulla ullamco"
           type="text"
+          formControlName="label"
         />
+        @if (isValidField('label')) {
+          <span class="form__span--error">{{ getFieldError('label') }}</span>
+        } @else {
+          <span class="form__span"></span>
+        }
       </div>
       <div class="form__group">
         <label class="form__label">Photo URL</label>
@@ -36,39 +43,27 @@
           class="form__input"
           placeholder="https://images.unsplash.com/photo-1704189277402-35a0edf7f410"
           type="text"
+          formControlName="url"
+        />
+        @if (isValidField('url')) {
+          <span class="form__span--error">{{ getFieldError('url') }}</span>
+        } @else {
+          <span class="form__span"></span>
+        }
+      </div>
+      <div class="dialog__actions">
+        <shared-button
+          type="button"
+          label="Cancel"
+          btnStyle="secondary"
+          (onClick)="closeDialog()"
+        />
+        <shared-button
+          type="submit"
+          label="Submit"
+          (onClick)="submitDialog()"
         />
       </div>
     </form>
   </div>
-  <div class="dialog__actions">
-    <shared-button label="Cancel" type="secondary" />
-    <shared-button label="Submit" />
-  </div>
-  <!-- <h1 mat-dialog-title>Add a new photo</h1>
-  <mat-dialog-content>
-    <form class="form">
-      <mat-form-field>
-        <mat-label>Label</mat-label>
-        <input
-          matInput
-          placeholder="Occaecat laborum nisi ad nisi"
-          type="text"
-        />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Photo URL</mat-label>
-        <input
-          matInput
-          placeholder="https://images.unsplash.com/photo-1704189277402-35a0edf7f410"
-          type="text"
-        />
-      </mat-form-field>
-    </form>
-  </mat-dialog-content>
-  <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-raised-button color="primary" mat-dialog-close>Submit</button>
-  </mat-dialog-actions> -->
-  <!-- <shared-button mat-dialog-close label="pat" type="primary"/> -->
-  <!-- <shared-button mat-dialog-close label="pat" type="primary"/> -->
 </ng-template>

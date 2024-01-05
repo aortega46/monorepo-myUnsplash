@@ -1,0 +1,48 @@
+.dialog {
+  padding: 16px;
+  border-radius: 16px;
+  width: 32rem;
+
+  // &__title {}
+  &__content {
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+
+      &__group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      // &__label{}
+
+      &__input {
+        padding: 8px 16px;
+        border-radius: 8px;
+        border: 1px solid gray;
+
+        &:focus {
+          outline: none;
+        }
+      }
+
+      &__span {
+        padding: .5rem;
+
+        &--error {
+          color: red;
+        }
+      }
+    }
+  }
+
+
+  &__actions {
+    display: flex;
+    gap: 8px;
+    justify-content: end;
+  }
+}
