@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 const getStyles = (...args:string[]) => ["button", ...args].filter(Boolean)
 
@@ -13,10 +13,18 @@ const getStyles = (...args:string[]) => ["button", ...args].filter(Boolean)
 export class ButtonComponent {
 
   @Input({required:true}) label: string = ''
+  @Input() btnStyle: 'primary' | 'secondary' | 'warning' = 'primary'
+  @Input() btnClass: string = ''
+  @Input() type: string = 'button'
 
-  @Input({required: true}) type: 'primary' | 'secondary' | 'warning' = 'primary'
+  @Output() onClick = new EventEmitter()
+
 
   get classes(): string[]{
-    return getStyles(this.type)
+    return getStyles(this.btnStyle, this.btnClass)
+  }
+
+  handleClick() {
+    this.onClick.emit()
   }
 }

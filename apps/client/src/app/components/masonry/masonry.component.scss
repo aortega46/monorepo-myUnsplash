@@ -1,0 +1,17 @@
+section {
+  column-gap: 16px;
+  columns: 3;
+  margin-top: 32px;
+}
+
+@media (max-width: 768px) {
+  section {
+    columns: 2;
+  }
+}
+
+@media (max-width: 425px) {
+  section {
+    columns: 1;
+  }
+}

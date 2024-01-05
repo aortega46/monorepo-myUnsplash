@@ -1,0 +1,23 @@
+form {
+  border-radius: 8px;
+  border: 1px solid gray;
+  display: flex;
+  align-items: center;
+
+  span {
+    color: gray;
+    font-size: 20px;
+    padding: 8px;
+  }
+
+  input {
+    border-radius: 8px;
+    padding: 10px 0px;
+    border: none;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+}

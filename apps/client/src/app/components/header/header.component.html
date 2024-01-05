@@ -1,3 +1,74 @@
-logo
-<shared-search-bar />
-<shared-button label="Add a photo" type="primary" />
+<header class="header">
+  <div class="header__left">
+    <img
+      class="header__logo"
+      src="./assets/unsplash-logo.svg"
+      alt="My Unsplash Logo"
+    />
+    <shared-search-bar />
+  </div>
+  @if (mobile) {
+    <shared-button label="Add a photo" (onClick)="openDialog(dialogTemplate)" />
+  } @else {
+    <shared-button
+      btnClass="icon-plus"
+      label="+"
+      (onClick)="openDialog(dialogTemplate)"
+    />
+  }
+</header>
+
+<ng-template #dialogTemplate>
+  <h1 class="dialog__title">Add a new photo</h1>
+  <div class="dialog__content">
+    <form class="dialog__form form">
+      <div class="form__group">
+        <label class="form__label">Label</label>
+        <input
+          class="form__input"
+          placeholder="Quis quis enim est ex voluptate nulla ullamco. "
+          type="text"
+        />
+      </div>
+      <div class="form__group">
+        <label class="form__label">Photo URL</label>
+        <input
+          class="form__input"
+          placeholder="https://images.unsplash.com/photo-1704189277402-35a0edf7f410"
+          type="text"
+        />
+      </div>
+    </form>
+  </div>
+  <div class="dialog__actions">
+    <shared-button label="Cancel" type="secondary" />
+    <shared-button label="Submit" />
+  </div>
+  <!-- <h1 mat-dialog-title>Add a new photo</h1>
+  <mat-dialog-content>
+    <form class="form">
+      <mat-form-field>
+        <mat-label>Label</mat-label>
+        <input
+          matInput
+          placeholder="Occaecat laborum nisi ad nisi"
+          type="text"
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Photo URL</mat-label>
+        <input
+          matInput
+          placeholder="https://images.unsplash.com/photo-1704189277402-35a0edf7f410"
+          type="text"
+        />
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="primary" mat-dialog-close>Submit</button>
+  </mat-dialog-actions> -->
+  <!-- <shared-button mat-dialog-close label="pat" type="primary"/> -->
+  <!-- <shared-button mat-dialog-close label="pat" type="primary"/> -->
+</ng-template>
