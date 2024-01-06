@@ -1,5 +1,7 @@
-import {Component} from '@angular/core'
+import {Component, OnInit, inject} from '@angular/core'
 import {CardComponent} from '../card/card.component'
+import {Image} from '../../interfaces/image'
+import {ImageService} from '../../services/image.service'
 
 @Component({
   selector: 'app-masonry',
@@ -9,7 +11,5 @@ import {CardComponent} from '../card/card.component'
   styleUrl: './masonry.component.scss',
 })
 export class MasonryComponent {
-  click() {
-    console.log('cli')
-  }
+  imageService = inject(ImageService)
 }
