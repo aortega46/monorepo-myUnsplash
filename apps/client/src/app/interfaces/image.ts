@@ -1,5 +1,5 @@
 export interface Image {
-  id: number
+  _id?: string
   label: string
   url: string
 }
