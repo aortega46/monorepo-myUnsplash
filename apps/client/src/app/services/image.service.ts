@@ -2,12 +2,13 @@ import {Injectable, inject} from '@angular/core'
 import {Observable, catchError, map, of} from 'rxjs'
 import {Image} from '../interfaces/image'
 import {HttpClient} from '@angular/common/http'
+import {environment} from '../../environments/environment'
 
 @Injectable({
   providedIn: 'root',
 })
 export class ImageService {
-  private baseUrl: string = ''
+  private baseUrl: string = environment.baseUrl
 
   http = inject(HttpClient)
 
