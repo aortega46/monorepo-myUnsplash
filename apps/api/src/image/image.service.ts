@@ -34,9 +34,10 @@ export class ImageService {
     return this.imageModel.find()
   }
 
-  async findOne(id: string): Promise<Image> {
+  async findByLabel(label: string) {
     try {
-      const image = await this.imageModel.findById(id)
+      const regex = new RegExp(label, 'gi')
+      const image = await this.imageModel.find({ label: regex })
       if (!image) throw new NotFoundException('Image does not exist')
       return image
     } catch (error) {

@@ -1,6 +1,15 @@
-import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common'
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common'
 import { ImageService } from './image.service'
 import { CreateImageDto } from './dto/create-image.dto'
+import { query } from 'express'
 
 @Controller('images')
 export class ImageController {
@@ -12,13 +21,9 @@ export class ImageController {
   }
 
   @Get()
-  findAll() {
+  findAll(@Query('q') query: string) {
+    if (!!query) return this.imageService.findByLabel(query)
     return this.imageService.findAll()
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.imageService.findOne(id)
   }
 
   @Delete(':id')
