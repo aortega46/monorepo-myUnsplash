@@ -8,6 +8,7 @@ import {ToastrService} from 'ngx-toastr'
 interface State {
   images: Image[]
   loading: boolean
+  query: Image[]
 }
 @Injectable({
   providedIn: 'root',
@@ -17,15 +18,18 @@ export class ImageService {
   private http = inject(HttpClient)
   private toastr = inject(ToastrService)
 
-  #state = signal<State>({loading: true, images: []})
+  #state = signal<State>({loading: true, images: [], query: []})
 
-  images = computed(() => this.#state().images)
+  images = computed(() =>
+    this.#state().query.length > 0 ? this.#state().query : this.#state().images,
+  )
   loading = computed(() => this.#state().loading)
 
   constructor() {
     this.getAllImages().subscribe((images) => {
       this.#state.set({
         loading: false,
+        query: [],
         images,
       })
     })
@@ -67,12 +71,20 @@ export class ImageService {
   }
 
   getImageByLabel(label: string) {
+    if(!label){
+      this.#state.update(current => ({
+        ...current,
+        query: []
+      }))
+      return
+    }
+
     this.http
       .get<Image[]>(`${this.baseUrl}/images?q=${label}`)
       .subscribe((images) => {
         this.#state.update((current) => ({
           ...current,
-          images: [...images],
+          query: [...images],
         }))
       })
   }
