@@ -1,5 +1,9 @@
 <article class="card">
-  <img class="card__image" src="{{ img.url }}" alt="{{ img.label }}" />
+  <img
+    class="card__image"
+    [src]="img.url | imagePipe | async"
+    [alt]="img.label"
+  />
   <div class="card__overlay overlay">
     <button class="overlay__button" (click)="openDialog(dialogTemplate)">
       delete

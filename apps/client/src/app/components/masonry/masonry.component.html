@@ -1,5 +1,7 @@
 <section>
   @for (img of imageService.images(); track $index) {
     <app-card [img]="img" />
+  } @empty {
+    <p>No images found</p>
   }
 </section>

@@ -5,11 +5,13 @@ import {MatDialogRef} from '@angular/material/dialog'
 import {DialogComponent} from '../../shared/components/dialog/dialog.component'
 import {ImageService} from '../../services/image.service'
 import {Image} from '../../interfaces/image'
+import {ImagePipe} from '../../pipes/image.pipe'
+import { AsyncPipe } from '@angular/common'
 
 @Component({
   selector: 'app-card',
   standalone: true,
-  imports: [ButtonComponent],
+  imports: [ButtonComponent, ImagePipe, AsyncPipe],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',
 })
