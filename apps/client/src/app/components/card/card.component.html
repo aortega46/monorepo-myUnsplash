@@ -1,12 +1,10 @@
 <article class="card">
-  <img class="card__image" src="https://placehold.co/{{ size }}" alt="" />
+  <img class="card__image" src="{{ img.url }}" alt="{{ img.label }}" />
   <div class="card__overlay overlay">
     <button class="overlay__button" (click)="openDialog(dialogTemplate)">
       delete
     </button>
-    <p class="overlay__title">
-      Eiusmod laborum et nisi quis labore officia commodo adipisicing in.
-    </p>
+    <p class="overlay__title">{{ img.label }}</p>
   </div>
 </article>
 

@@ -13,6 +13,8 @@ import {
   Validators,
 } from '@angular/forms'
 import {CommonModule} from '@angular/common'
+import {ImageService} from '../../services/image.service'
+import {Image} from '../../interfaces/image'
 
 const urlRegex = RegExp('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')
 
@@ -44,6 +46,7 @@ export class HeaderComponent implements OnDestroy {
     private breakpointObserver: BreakpointObserver,
     private dialogService: DialogService,
     private fb: FormBuilder,
+    private imageSerice: ImageService,
   ) {
     this.changeButtonBreakpoint()
   }
@@ -101,9 +104,8 @@ export class HeaderComponent implements OnDestroy {
   submitDialog() {
     if (this.myForm.invalid) return this.myForm.markAllAsTouched()
 
-    // TODO: call Image service http
-    console.log(this.myForm.value)
-
+    const newImg: Image = this.myForm.value as Image
+    this.imageSerice.addImage(newImg)
     this.closeDialog()
   }
 }

@@ -3,6 +3,8 @@ import {DialogService} from '../../services/dialog.service'
 import {ButtonComponent} from '../../shared/components/button/button.component'
 import {MatDialogRef} from '@angular/material/dialog'
 import {DialogComponent} from '../../shared/components/dialog/dialog.component'
+import {ImageService} from '../../services/image.service'
+import {Image} from '../../interfaces/image'
 
 @Component({
   selector: 'app-card',
@@ -12,11 +14,12 @@ import {DialogComponent} from '../../shared/components/dialog/dialog.component'
   styleUrl: './card.component.scss',
 })
 export class CardComponent {
-  @Input() size!: string
+  @Input({required: true}) img!: Image
 
   dialog?: MatDialogRef<DialogComponent>
 
   dialogService = inject(DialogService)
+  imageService = inject(ImageService)
 
   openDialog(dialogTemplate: TemplateRef<any>) {
     this.dialog = this.dialogService.openDialog({template: dialogTemplate})
@@ -27,8 +30,7 @@ export class CardComponent {
   }
 
   submitDialog() {
-    // TODO: call Image service http
-
+    this.imageService.deleteImageById(this.img._id!)
     this.closeDialog()
   }
 }

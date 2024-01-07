@@ -33,16 +33,25 @@ export class ImageService {
     return this.http.get<Image[]>(`${this.baseUrl}/images`)
   }
 
-  addImage(image: Image): Observable<Image> {
-    return this.http.post<Image>(`${this.baseUrl}/images`, image)
+  addImage(image: Image) {
+    this.http.post<Image>(`${this.baseUrl}/images`, image).subscribe((img) =>
+      this.#state.update((current) => ({
+        ...current,
+        images: [...current.images, img],
+      })),
+    )
   }
 
-  deleteImageById(id: string): Observable<boolean> {
+  deleteImageById(id: string) {
     if (!id) throw Error('Image id is required')
-    return this.http.delete(`${this.baseUrl}/images/${id}`).pipe(
-      map((res) => true),
-      catchError((err) => of(false)),
-    )
+    return this.http
+      .delete<Image>(`${this.baseUrl}/images/${id}`)
+      .subscribe((res) => {
+        this.#state.update((current) => ({
+          ...current,
+          images: [...current.images.filter((img) => img._id !== res._id)],
+        }))
+      })
   }
 
   getImageByLabel(label: string): Observable<Image> | undefined {
