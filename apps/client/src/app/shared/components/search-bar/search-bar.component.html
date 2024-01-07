@@ -1,4 +1,9 @@
 <form>
   <span class="material-symbols-outlined"> search </span>
-  <input type="text" placeholder="Search by name" />
+  <input
+    type="text"
+    placeholder="Search by name"
+    #txtInput
+    (keyup)="onKeyPress(txtInput.value)"
+  />
 </form>

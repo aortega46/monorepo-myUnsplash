@@ -1,5 +1,5 @@
 import {Injectable, computed, inject, signal} from '@angular/core'
-import {Observable, catchError, map, of} from 'rxjs'
+import {Observable} from 'rxjs'
 import {Image} from '../interfaces/image'
 import {HttpClient} from '@angular/common/http'
 import {environment} from '../../environments/environment'
@@ -54,7 +54,14 @@ export class ImageService {
       })
   }
 
-  getImageByLabel(label: string): Observable<Image> | undefined {
-    return of()
+  getImageByLabel(label: string) {
+    this.http
+      .get<Image[]>(`${this.baseUrl}/images?q=${label}`)
+      .subscribe((images) => {
+        this.#state.update((current) => ({
+          ...current,
+          images: [...images],
+        }))
+      })
   }
 }

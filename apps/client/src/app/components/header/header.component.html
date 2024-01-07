@@ -5,7 +5,7 @@
       src="./assets/unsplash-logo.svg"
       alt="My Unsplash Logo"
     />
-    <shared-search-bar />
+    <shared-search-bar (onDebounce)="findByLabel($event)" />
   </div>
   @if (mobile) {
     <shared-button label="Add a photo" (onClick)="openDialog(dialogTemplate)" />

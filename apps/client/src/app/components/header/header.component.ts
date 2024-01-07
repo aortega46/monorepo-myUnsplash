@@ -108,4 +108,8 @@ export class HeaderComponent implements OnDestroy {
     this.imageSerice.addImage(newImg)
     this.closeDialog()
   }
+
+  findByLabel(search: string) {
+    this.imageSerice.getImageByLabel(search)
+  }
 }
