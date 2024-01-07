@@ -1,9 +1,16 @@
 <article class="card">
   <img
-    class="card__image"
+    class="card__image animate__animated animate__fadeIn"
     [src]="img.url | imagePipe | async"
     [alt]="img.label"
+    (load)="onLoad()"
+    [ngStyle]="{display: imageHasLoaded ? '' : 'none'}"
   />
+  @if (!imageHasLoaded) {
+    <div class="card__loader">
+      <img src="assets/loader.svg" />
+    </div>
+  }
   <div class="card__overlay overlay">
     <button class="overlay__button" (click)="openDialog(dialogTemplate)">
       delete

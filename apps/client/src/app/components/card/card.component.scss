@@ -47,4 +47,11 @@
       color: white;
     }
   }
+
+  &__loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
 }

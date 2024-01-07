@@ -6,12 +6,12 @@ import {DialogComponent} from '../../shared/components/dialog/dialog.component'
 import {ImageService} from '../../services/image.service'
 import {Image} from '../../interfaces/image'
 import {ImagePipe} from '../../pipes/image.pipe'
-import { AsyncPipe } from '@angular/common'
+import {AsyncPipe, CommonModule} from '@angular/common'
 
 @Component({
   selector: 'app-card',
   standalone: true,
-  imports: [ButtonComponent, ImagePipe, AsyncPipe],
+  imports: [ButtonComponent, ImagePipe, AsyncPipe, CommonModule],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',
 })
@@ -19,9 +19,10 @@ export class CardComponent {
   @Input({required: true}) img!: Image
 
   dialog?: MatDialogRef<DialogComponent>
+  imageHasLoaded: boolean = false
 
-  dialogService = inject(DialogService)
-  imageService = inject(ImageService)
+  private dialogService = inject(DialogService)
+  private imageService = inject(ImageService)
 
   openDialog(dialogTemplate: TemplateRef<any>) {
     this.dialog = this.dialogService.openDialog({template: dialogTemplate})
@@ -34,5 +35,9 @@ export class CardComponent {
   submitDialog() {
     this.imageService.deleteImageById(this.img._id!)
     this.closeDialog()
+  }
+
+  onLoad() {
+    this.imageHasLoaded = true
   }
 }

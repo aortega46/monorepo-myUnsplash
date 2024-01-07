@@ -1,5 +1,9 @@
 <form>
-  <span class="material-symbols-outlined"> search </span>
+  @if (loading) {
+    <img class="loader" src="assets/loader.svg" width="16px" height="16px" />
+  } @else {
+    <span class="material-symbols-outlined"> search </span>
+  }
   <input
     type="text"
     placeholder="Search by name"

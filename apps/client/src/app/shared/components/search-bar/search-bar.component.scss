@@ -1,23 +1,27 @@
 form {
-  border-radius: 8px;
+  border-radius: .5rem;
   border: 1px solid gray;
   display: flex;
   align-items: center;
 
   span {
     color: gray;
-    font-size: 20px;
-    padding: 8px;
+    font-size: 1.25em;
+    padding: .5rem;
   }
 
   input {
     border-radius: 8px;
-    padding: 10px 0px;
+    padding: .625rem 0px;
     border: none;
 
     &:focus {
       outline: none;
     }
+  }
+
+  .loader {
+    margin: .625rem;
   }
 
 }

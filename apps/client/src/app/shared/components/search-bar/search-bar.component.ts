@@ -12,6 +12,8 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   private debouncer: Subject<string> = new Subject<string>()
   private debouncerSubscription?: Subscription
 
+  loading: boolean = false
+
   @Output() onDebounce: EventEmitter<string> = new EventEmitter()
 
   ngOnInit(): void {
@@ -19,6 +21,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
       .pipe(debounceTime(500))
       .subscribe((val) => {
         this.onDebounce.emit(val)
+        this.loading = false
       })
   }
   ngOnDestroy(): void {
@@ -26,6 +29,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   onKeyPress(search: string) {
+    this.loading = true
     this.debouncer.next(search)
   }
 }
