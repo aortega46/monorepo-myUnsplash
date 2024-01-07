@@ -1,9 +1,13 @@
 <article class="card">
   <img
     class="card__image animate__animated animate__fadeIn"
-    [src]="img.url | imagePipe | async"
+    [ngSrc]="img.url"
     [alt]="img.label"
+    height="40"
+    width="40"
+    priority
     (load)="onLoad()"
+    (error)="onImageError()"
     [ngStyle]="{display: imageHasLoaded ? '' : 'none'}"
   />
   @if (!imageHasLoaded) {

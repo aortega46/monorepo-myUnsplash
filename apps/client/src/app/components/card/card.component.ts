@@ -1,21 +1,20 @@
-import {Component, Input, TemplateRef, inject} from '@angular/core'
+import {Component, Input, OnInit, TemplateRef, inject} from '@angular/core'
 import {DialogService} from '../../services/dialog.service'
 import {ButtonComponent} from '../../shared/components/button/button.component'
 import {MatDialogRef} from '@angular/material/dialog'
 import {DialogComponent} from '../../shared/components/dialog/dialog.component'
 import {ImageService} from '../../services/image.service'
 import {Image} from '../../interfaces/image'
-import {ImagePipe} from '../../pipes/image.pipe'
-import {AsyncPipe, CommonModule} from '@angular/common'
+import {AsyncPipe, CommonModule, NgOptimizedImage} from '@angular/common'
 
 @Component({
   selector: 'app-card',
   standalone: true,
-  imports: [ButtonComponent, ImagePipe, AsyncPipe, CommonModule],
+  imports: [ButtonComponent, AsyncPipe, CommonModule, NgOptimizedImage],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',
 })
-export class CardComponent {
+export class CardComponent implements OnInit {
   @Input({required: true}) img!: Image
 
   dialog?: MatDialogRef<DialogComponent>
@@ -23,6 +22,10 @@ export class CardComponent {
 
   private dialogService = inject(DialogService)
   private imageService = inject(ImageService)
+
+  ngOnInit(): void {
+    if (!this.img) throw Error('IMG is required')
+  }
 
   openDialog(dialogTemplate: TemplateRef<any>) {
     this.dialog = this.dialogService.openDialog({template: dialogTemplate})
@@ -39,5 +42,9 @@ export class CardComponent {
 
   onLoad() {
     this.imageHasLoaded = true
+  }
+
+  onImageError() {
+    this.img.url = 'assets/no-image.jpg'
   }
 }
