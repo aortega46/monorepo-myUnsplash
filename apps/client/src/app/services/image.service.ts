@@ -3,6 +3,7 @@ import {Observable} from 'rxjs'
 import {Image} from '../interfaces/image'
 import {HttpClient} from '@angular/common/http'
 import {environment} from '../../environments/environment'
+import {ToastrService} from 'ngx-toastr'
 
 interface State {
   images: Image[]
@@ -14,6 +15,7 @@ interface State {
 export class ImageService {
   private baseUrl: string = environment.baseUrl
   private http = inject(HttpClient)
+  private toastr = inject(ToastrService)
 
   #state = signal<State>({loading: true, images: []})
 
@@ -34,24 +36,34 @@ export class ImageService {
   }
 
   addImage(image: Image) {
-    this.http.post<Image>(`${this.baseUrl}/images`, image).subscribe((img) =>
-      this.#state.update((current) => ({
-        ...current,
-        images: [...current.images, img],
-      })),
-    )
+    this.http.post<Image>(`${this.baseUrl}/images`, image).subscribe({
+      next: (img) => {
+        this.#state.update((current) => ({
+          ...current,
+          images: [...current.images, img],
+        }))
+
+        return this.toastr.success('Image added')
+      },
+      error: (err) => {
+        if (err.status == 400) return this.toastr.error('Image URL not valid')
+        return this.toastr.error('Something went wrong')
+      },
+    })
   }
 
   deleteImageById(id: string) {
     if (!id) throw Error('Image id is required')
-    return this.http
-      .delete<Image>(`${this.baseUrl}/images/${id}`)
-      .subscribe((res) => {
+    this.http.delete<Image>(`${this.baseUrl}/images/${id}`).subscribe({
+      next: (res) => {
         this.#state.update((current) => ({
           ...current,
           images: [...current.images.filter((img) => img._id !== res._id)],
         }))
-      })
+        return this.toastr.success('Image removed')
+      },
+      error: () => this.toastr.error('Something went wrong'),
+    })
   }
 
   getImageByLabel(label: string) {
