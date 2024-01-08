@@ -44,7 +44,7 @@ export class ImageService {
       next: (img) => {
         this.#state.update((current) => ({
           ...current,
-          images: [...current.images, img],
+          images: [img, ...current.images],
         }))
 
         return this.toastr.success('Image added')
@@ -71,10 +71,10 @@ export class ImageService {
   }
 
   getImageByLabel(label: string) {
-    if(!label){
-      this.#state.update(current => ({
+    if (!label) {
+      this.#state.update((current) => ({
         ...current,
-        query: []
+        query: [],
       }))
       return
     }
