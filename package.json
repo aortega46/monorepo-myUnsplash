@@ -8,7 +8,10 @@
     "apps/*"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:ng": "npm run start --workspace=apps/client",
+    "start:api": "npm run start:dev --workspace=apps/api",
+    "build:ng": "npm run build --workspace=apps/client",
+    "build:api": "npm run build --workspace=apps/api"
   },
   "devDependencies": {
     "prettier": "3.1.1"
