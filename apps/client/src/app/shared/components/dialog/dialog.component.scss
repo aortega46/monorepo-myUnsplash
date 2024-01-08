@@ -1,7 +1,7 @@
 .dialog {
   padding: 16px;
   border-radius: 16px;
-  width: 32rem;
+  width: 32em;
 
   // &__title {}
   &__content {
@@ -44,5 +44,11 @@
     display: flex;
     gap: 8px;
     justify-content: end;
+  }
+}
+
+@media (max-width:625px) {
+  .dialog{
+    width: 16rem;
   }
 }
