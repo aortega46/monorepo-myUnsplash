@@ -8,9 +8,11 @@ import {
   Query,
   BadRequestException,
   InternalServerErrorException,
+  Patch,
 } from '@nestjs/common'
 import { ImageService } from './image.service'
 import { CreateImageDto } from './dto/create-image.dto'
+import { UpdateImageDto } from './dto/update-image.dto'
 
 @Controller('images')
 export class ImageController {
@@ -49,5 +51,10 @@ export class ImageController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.imageService.remove(id)
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateImageDto: UpdateImageDto) {
+    return this.imageService.update(id, updateImageDto)
   }
 }

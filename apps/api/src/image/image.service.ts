@@ -9,6 +9,7 @@ import { randomUUID as uuid } from 'crypto'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { Image } from './entities/image.entity'
+import { UpdateImageDto } from './dto/update-image.dto'
 
 @Injectable()
 export class ImageService {
@@ -51,6 +52,23 @@ export class ImageService {
       const imageDeleted = await this.imageModel.findByIdAndDelete(id)
       if (!imageDeleted) throw new NotFoundException('Image does not exist')
       return imageDeleted
+    } catch (error) {
+      if (error.status) throw error
+      throw new BadRequestException()
+    }
+  }
+
+  async update(id: string, updateImageDto: UpdateImageDto) {
+    try {
+      const imageUpdated = await this.imageModel.findByIdAndUpdate(
+        id,
+        updateImageDto,
+        {
+          new: true,
+        },
+      )
+      if (!imageUpdated) throw new NotFoundException('Image not found')
+      return imageUpdated
     } catch (error) {
       if (error.status) throw error
       throw new BadRequestException()
