@@ -88,4 +88,17 @@ export class ImageService {
         }))
       })
   }
+
+  editImageLabel(_id: string, label: string) {
+    this.http.patch<Image>(`${this.baseUrl}/images/${_id}`, label).subscribe({
+      next: (image) => {
+        this.#state.update((current) => ({
+          ...current,
+          images: current.images.map((img) => (img._id === _id ? image : img)),
+        }))
+        this.toastr.success('Image edited')
+      },
+      error: () => this.toastr.error("Can't be edited"),
+    })
+  }
 }

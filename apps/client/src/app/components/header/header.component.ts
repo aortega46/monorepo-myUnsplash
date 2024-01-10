@@ -15,6 +15,7 @@ import {
 import {CommonModule} from '@angular/common'
 import {ImageService} from '../../services/image.service'
 import {Image} from '../../interfaces/image'
+import {ValidatorsService} from '../../shared/services/validators.service'
 
 const urlRegex = RegExp('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')
 
@@ -47,6 +48,7 @@ export class HeaderComponent implements OnDestroy {
     private dialogService: DialogService,
     private fb: FormBuilder,
     private imageSerice: ImageService,
+    private validatorsService: ValidatorsService,
   ) {
     this.changeButtonBreakpoint()
   }
@@ -75,30 +77,11 @@ export class HeaderComponent implements OnDestroy {
   }
 
   isValidField(field: string): boolean | null {
-    return (
-      this.myForm.controls[field].errors && this.myForm.controls[field].touched
-    )
+    return this.validatorsService.isValidField(this.myForm, field)
   }
 
   getFieldError(field: string): string | null {
-    if (!this.myForm.controls[field]) return null
-
-    const errors = this.myForm.controls[field].errors || {}
-
-    for (const key of Object.keys(errors)) {
-      switch (key) {
-        case 'required':
-          return 'Field required'
-
-        case 'minlength':
-          return `Min length: ${errors['minlength'].requiredLength} .`
-
-        case 'pattern':
-          return `Must be an url`
-      }
-    }
-
-    return null
+    return this.validatorsService.getFieldError(this.myForm, field)
   }
 
   submitDialog() {

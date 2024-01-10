@@ -16,15 +16,26 @@
     </div>
   }
   <div class="card__overlay overlay">
-    <button class="overlay__button" (click)="openDialog(dialogTemplate)">
-      delete
-    </button>
+    <div class="overlay__btns__container container">
+      <button
+        class="container__button"
+        (click)="openDialog(dialogTemplateEdit)"
+      >
+        edit
+      </button>
+      <button
+        class="container__button--red"
+        (click)="openDialog(dialogTemplateDelete)"
+      >
+        delete
+      </button>
+    </div>
     <p class="overlay__title">{{ img.label }}</p>
   </div>
 </article>
 
-<!-- Dialog -->
-<ng-template #dialogTemplate>
+<!-- Dialog Delete -->
+<ng-template #dialogTemplateDelete>
   <h1 class="dialog__title">Are you sure?</h1>
   <div class="dialog__content">
     <div class="dialog__actions">
@@ -38,7 +49,43 @@
         type="submit"
         btnStyle="warning"
         label="Delete"
-        (onClick)="submitDialog()"
+        (onClick)="submitDeleteDialog()"
+      />
+    </div>
+  </div>
+</ng-template>
+
+<!-- Dialog Edit -->
+<ng-template #dialogTemplateEdit>
+  <h1 class="dialog__title">Edit name</h1>
+  <div class="dialog__content">
+    <form class="dialog__form form" [formGroup]="myForm">
+      <div class="form__group">
+        <label class="form__label">Label</label>
+        <input
+          class="form__input"
+          placeholder="Voluptate non non ea velit nisi aliquip"
+          type="text"
+          formControlName="label"
+        />
+        @if (isValidField('label')) {
+          <span class="form__span--error">{{ getFieldError('label') }}</span>
+        } @else {
+          <span class="form__span"></span>
+        }
+      </div>
+    </form>
+    <div class="dialog__actions">
+      <shared-button
+        type="button"
+        label="Cancel"
+        btnStyle="secondary"
+        (onClick)="closeDialog()"
+      />
+      <shared-button
+        type="submit"
+        label="Submit"
+        (onClick)="submitEditDialog()"
       />
     </div>
   </div>
