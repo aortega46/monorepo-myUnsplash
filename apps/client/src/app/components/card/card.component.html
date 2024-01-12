@@ -23,7 +23,7 @@
       >
         edit
       </button>
-      <button
+      <button *ngIf="authStatus() === 'authenticated'"
         class="container__button--red"
         (click)="openDialog(dialogTemplateDelete)"
       >

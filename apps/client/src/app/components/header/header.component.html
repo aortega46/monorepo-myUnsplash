@@ -7,14 +7,21 @@
     />
     <shared-search-bar (onDebounce)="findByLabel($event)" />
   </div>
-  @if (mobile) {
-    <shared-button label="Add a photo" (onClick)="openDialog(dialogTemplate)" />
-  } @else {
-    <shared-button
-      btnClass="icon-plus"
-      label="+"
-      (onClick)="openDialog(dialogTemplate)"
-    />
+  @if (authStatus() === 'notAuthenticated') {
+    <auth-login />
+  } @else if (authStatus() === 'authenticated') {
+    @if (mobile) {
+      <shared-button
+        label="Add a photo"
+        (onClick)="openDialog(dialogTemplate)"
+      />
+    } @else {
+      <shared-button
+        btnClass="icon-plus"
+        label="+"
+        (onClick)="openDialog(dialogTemplate)"
+      />
+    }
   }
 </header>
 

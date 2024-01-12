@@ -1,0 +1,47 @@
+<shared-button label="Login" (onClick)="openDialog(loginDialog)" />
+
+<!-- Login Dialog -->
+<ng-template #loginDialog>
+  <h1 class="dialog__title">Login</h1>
+  <div class="dialog__content">
+    <form class="dialog__form form" [formGroup]="myForm">
+      <div class="form__group">
+        <label class="form__label">Email</label>
+        <input
+          class="form__input"
+          placeholder="email@email.com"
+          type="text"
+          formControlName="email"
+        />
+        @if (isValidField('email')) {
+          <span class="form__span--error">{{ getFieldError('email') }}</span>
+        } @else {
+          <span class="form__span"></span>
+        }
+      </div>
+      <div class="form__group">
+        <label class="form__label">Password</label>
+        <input
+          class="form__input"
+          placeholder="Password"
+          type="password"
+          formControlName="password"
+        />
+        @if (isValidField('password')) {
+          <span class="form__span--error">{{ getFieldError('password') }}</span>
+        } @else {
+          <span class="form__span"></span>
+        }
+      </div>
+      <div class="dialog__actions">
+        <shared-button
+          type="button"
+          label="Cancel"
+          btnStyle="secondary"
+          (onClick)="closeDialog()"
+        />
+        <shared-button type="submit" label="Login" (onClick)="submitDialog()" />
+      </div>
+    </form>
+  </div>
+</ng-template>

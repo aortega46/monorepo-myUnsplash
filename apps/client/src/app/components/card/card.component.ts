@@ -1,4 +1,11 @@
-import {Component, Input, OnInit, TemplateRef, inject} from '@angular/core'
+import {
+  Component,
+  Input,
+  OnInit,
+  TemplateRef,
+  computed,
+  inject,
+} from '@angular/core'
 import {DialogService} from '../../services/dialog.service'
 import {ButtonComponent} from '../../shared/components/button/button.component'
 import {MatDialogRef} from '@angular/material/dialog'
@@ -13,6 +20,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms'
+import {AuthService} from '../../auth/services/auth.service'
 
 @Component({
   selector: 'app-card',
@@ -42,6 +50,10 @@ export class CardComponent implements OnInit {
   validatorsService = inject(ValidatorsService)
   private dialogService = inject(DialogService)
   private imageService = inject(ImageService)
+  private authService = inject(AuthService)
+
+  authStatus = computed(() => this.authService.authStatus())
+
 
   ngOnInit(): void {
     if (!this.img) throw Error('IMG is required')

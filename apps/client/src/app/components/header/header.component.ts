@@ -1,4 +1,10 @@
-import {Component, OnDestroy, TemplateRef, inject} from '@angular/core'
+import {
+  Component,
+  OnDestroy,
+  TemplateRef,
+  computed,
+  inject,
+} from '@angular/core'
 import {ButtonComponent} from '../../shared/components/button/button.component'
 import {SearchBarComponent} from '../../shared/components/search-bar/search-bar.component'
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout'
@@ -16,6 +22,8 @@ import {CommonModule} from '@angular/common'
 import {ImageService} from '../../services/image.service'
 import {Image} from '../../interfaces/image'
 import {ValidatorsService} from '../../shared/services/validators.service'
+import {AuthService} from '../../auth/services/auth.service'
+import {LoginComponent} from '../../auth/components/login/login.component'
 
 const urlRegex = RegExp('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')
 
@@ -28,6 +36,7 @@ const urlRegex = RegExp('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')
     DialogComponent,
     ReactiveFormsModule,
     CommonModule,
+    LoginComponent,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
@@ -43,12 +52,15 @@ export class HeaderComponent implements OnDestroy {
     url: ['', [Validators.required, Validators.pattern(urlRegex)]],
   })
 
+  authStatus = computed(() => this.authService.authStatus())
+
   constructor(
     private breakpointObserver: BreakpointObserver,
     private dialogService: DialogService,
     private fb: FormBuilder,
     private imageSerice: ImageService,
     private validatorsService: ValidatorsService,
+    private authService: AuthService,
   ) {
     this.changeButtonBreakpoint()
   }
