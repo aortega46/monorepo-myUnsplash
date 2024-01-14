@@ -9,15 +9,18 @@ import {
   BadRequestException,
   InternalServerErrorException,
   Patch,
+  UseGuards,
 } from '@nestjs/common'
 import { ImageService } from './image.service'
 import { CreateImageDto } from './dto/create-image.dto'
 import { UpdateImageDto } from './dto/update-image.dto'
+import { AuthGuard } from 'src/auth/guards/auth.guard'
 
 @Controller('images')
 export class ImageController {
   constructor(private readonly imageService: ImageService) {}
 
+  @UseGuards(AuthGuard)
   @Post()
   async create(@Body() createImageDto: CreateImageDto) {
     const newUrl = createImageDto.url.includes('http')
@@ -48,6 +51,7 @@ export class ImageController {
     return this.imageService.findAll()
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.imageService.remove(id)
