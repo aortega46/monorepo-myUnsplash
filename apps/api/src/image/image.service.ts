@@ -32,7 +32,7 @@ export class ImageService {
   }
 
   findAll(): Promise<Image[]> {
-    return this.imageModel.find()
+    return this.imageModel.find().sort({ _id: -1 })
   }
 
   async findByLabel(label: string) {
