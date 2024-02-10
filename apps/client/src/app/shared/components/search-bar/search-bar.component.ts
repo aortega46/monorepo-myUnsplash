@@ -1,4 +1,12 @@
-import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core'
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core'
 import {Subject, Subscription, debounceTime} from 'rxjs'
 
 @Component({
@@ -15,6 +23,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   loading: boolean = false
 
   @Output() onDebounce: EventEmitter<string> = new EventEmitter()
+  @ViewChild('txtInput') txtInput!: ElementRef
 
   ngOnInit(): void {
     this.debouncerSubscription = this.debouncer
@@ -31,5 +40,10 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   onKeyPress(search: string) {
     this.loading = true
     this.debouncer.next(search)
+  }
+
+  onSubmit(event: Event) {
+    event.preventDefault()
+    this.onDebounce.emit(this.txtInput.nativeElement.value)
   }
 }
