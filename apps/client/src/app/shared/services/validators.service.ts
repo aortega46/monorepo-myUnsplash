@@ -38,16 +38,14 @@ export class ValidatorsService {
     return null
   }
 
-  isFieldEqualToOriginal(field: string, originalValue: string): ValidatorFn {
+  isFieldEqualToOriginal(originalValue: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const fieldValue = control.get(field)?.value
+      const fieldValue = control.value
 
       if (fieldValue === originalValue) {
-        control.get(field)?.setErrors({equal: true})
         return {equal: true}
       }
 
-      control.get(field)?.setErrors(null)
       return null
     }
   }

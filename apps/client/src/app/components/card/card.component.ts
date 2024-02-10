@@ -54,7 +54,6 @@ export class CardComponent implements OnInit {
 
   authStatus = computed(() => this.authService.authStatus())
 
-
   ngOnInit(): void {
     if (!this.img) throw Error('IMG is required')
     this.setLabelValidator()
@@ -99,12 +98,20 @@ export class CardComponent implements OnInit {
   }
 
   setLabelValidator() {
-    this.myForm.setValidators(
-      Validators.compose([
-        this.myForm.validator,
-        this.validatorsService.isFieldEqualToOriginal('label', this.img.label),
-      ]),
+    const label = this.myForm.get('label')
+
+    if (!label) return
+
+    const newValidator = this.validatorsService.isFieldEqualToOriginal(
+      this.img.label,
     )
+    const actualValidators = label.validator
+      ? [label.validator, newValidator]
+      : [newValidator]
+
+    label.setValidators(actualValidators)
+    label.updateValueAndValidity()
+
     this.myForm.reset({label: this.img.label})
   }
 }
