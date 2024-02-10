@@ -1,5 +1,5 @@
 import {Injectable, computed, inject, signal} from '@angular/core'
-import {Observable} from 'rxjs'
+import {Observable, tap} from 'rxjs'
 import {Image} from '../interfaces/image'
 import {HttpClient} from '@angular/common/http'
 import {environment} from '../../environments/environment'
@@ -21,9 +21,11 @@ export class ImageService {
   #state = signal<State>({loading: true, images: [], query: []})
 
   images = computed(() =>
-    this.#state().query.length > 0 ? this.#state().query : this.#state().images,
+    this.searching ? this.#state().query : this.#state().images,
   )
   loading = computed(() => this.#state().loading)
+
+  private searching: boolean = false
 
   constructor() {
     this.getAllImages().subscribe((images) => {
@@ -76,9 +78,11 @@ export class ImageService {
         ...current,
         query: [],
       }))
+      this.searching = false
       return
     }
 
+    this.searching = true
     this.http
       .get<Image[]>(`${this.baseUrl}/images?q=${label}`)
       .subscribe((images) => {
